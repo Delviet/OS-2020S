@@ -1,0 +1,2 @@
+Physical adress is some place in actual main memory and is used by the processes via an abstraction of the virtual memory, which is ruled by the kernel of the operating system.
+Virtual adress is adress, to which particular process may refer directly. It is assigned to virtual memory and can be not in actual main memory at the moment of the call.
