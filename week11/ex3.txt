@@ -1,0 +1,3 @@
+Probably stdout is buffered in such a way that it is freed after the use of new line symbol.
+So, in the first case buffered is copied for both processes and after that freed after the fork, so result is printed twice.
+In the second case, buffer is freed, so at the fork moment there is no "Hello" inside it, hence "\n" just move to the new line, without printing "Hello".
