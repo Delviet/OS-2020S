@@ -1,0 +1,1 @@
+head -c 100 /dev/random | tr -dc 'a-zA-Z0-9' | head -c 20
