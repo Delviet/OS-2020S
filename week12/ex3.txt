@@ -1,0 +1,96 @@
+During the experiments with the different files, I have noticed that for my system execution time is directly proportional to the size of the file. In the other words, if file size S was copied in T seconds, then file size I*S will be copied in approximately I*T seconds (experimented on ~10 files with size range ~500 KB up to 100 MB).
+After setting greater size of the buffer, execution time has reduced. Buffer size = 1024 did not spped up the system too much, however buffer size = 32768 speeded it up drastically (~30 times).
+Then I ahve changed the code and included O_SYNC flag. However, I didn't notice any major differences in execution time. The only counter-intuitive change was with "databook.pdf" file on 1024 buffer: execution time was reduced by 1/4. It seems strange for me, as this flag makes system check that data was transmitted to the hard drive, hence it should work slower (due to additional waiting/check).
+
+Below you may see some outputs.
+
+gcc copy.c -o copy.exe
+
+time ./copy.exe tv_ms_2.pdf tv_ms_1.pdf
+
+real    0m0.747s
+user    0m0.000s
+sys     0m0.098s
+
+time ./copy.exe similar.zip new_similar.zip
+
+real    0m0.647s
+user    0m0.000s
+sys     0m0.131s
+
+time ./copy.exe "databook.pdf" new_databook.pdf
+
+real    0m48.278s
+user    0m0.811s
+sys     0m6.654s
+
+gcc copy.c -o copy.exe -DBUF_SIZE=1024
+
+time ./copy.exe tv_ms_2.pdf tv_ms_1.pdf
+
+real    0m0.347s
+user    0m0.000s
+sys     0m0.087s
+
+time ./copy.exe "databook.pdf" new_databook.pdf
+
+real    0m46.847s
+user    0m1.278s
+sys     0m6.187s
+
+gcc copy.c -o copy.exe -DBUF_SIZE=32768
+
+time ./copy.exe tv_ms_2.pdf tv_ms_1.pdf
+
+real    0m0.088s
+user    0m0.006s
+sys     0m0.000s
+
+time ./copy.exe "databook.pdf" new_databook.pdf
+
+real    0m1.405s
+user    0m0.107s
+sys     0m0.161s
+
+----------------------------------------------------------- Changed file at this point
+gcc copy.c -o copy.exe
+
+time ./copy.exe tv_ms_2.pdf tv_ms_1.pdf
+
+real    0m0.435s
+user    0m0.070s
+sys     0m0.001s
+
+time ./copy.exe "databook.pdf" new_databook.pdf
+
+real    0m45.337s
+user    0m0.751s
+sys     0m6.887s
+
+gcc copy.c -o copy.exe -DBUF_SIZE=1024
+
+time ./copy.exe tv_ms_2.pdf tv_ms_1.pdf
+
+real    0m0.355s
+user    0m0.071s
+sys     0m0.001s
+
+time ./copy.exe "databook.pdf" new_databook.pdf
+
+real    0m34.934s
+user    0m0.916s
+sys     0m6.377s
+
+gcc copy.c -o copy.exe -DBUF_SIZE=32768
+
+time ./copy.exe tv_ms_2.pdf tv_ms_1.pdf
+
+real    0m0.041s
+user    0m0.007s
+sys     0m0.001s
+
+time ./copy.exe "databook.pdf" new_databook.pdf
+
+real    0m1.499s
+user    0m0.076s
+sys     0m0.252s
