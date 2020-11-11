@@ -1,0 +1,4 @@
+Let us consider possibilities:
+Avoidance is the best in case when there are a lot of processes and very few resource operations: Prevention will work slower due to high number of processes (and their processing is complicated by the Prevention); Recovery also seems to be worse in this case, as there may be situation when several processes should be killed and restored so that deadlock disappear.
+Prevention is the best in case when there are few long processes and a lot of resource allocation/deallocation: Avoidance will work slower on resource checks, Recovery will work worse because if rollback done in such intensive process (a lot of management done), then its re-execution will last for a long time.
+Recovery is the best in case of many lightweight processes, which mostly transfer the resources - then rollback will be more efficient than additional load on Avoidance at each resource operation or pre-processing of multiple processes with Prevention.
